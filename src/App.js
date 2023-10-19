@@ -1,38 +1,34 @@
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-
-let sesion=true;
-
+import Header from './components/header';
+import { Alumnos } from './components/alumnos';
+import Login from './components/login';
 let amigos = ['Joaquin', 'Nayeli', 'Ana'];
 
-function Header({title, color}){
-  return <h1 style={{color: color ? color: 'white'}}>{title ? title: "No hay nada"}</h1>
-}
-
 function App() {
+  const [sesion, setSesion] = useState(true)
   return (
     <div className="App">
       <header className="App-header">
+        <Header title={"Mi 1er proyecto de React"}/>
         <img src={logo} className="App-logo" alt="logo" />
-        <h1>Bienvenidos a js</h1>
-        <Header title={"holaaaa"} color={"green"}/>
-        <Header title={"adios"} color={"yellow"}/>
-        <Header title={"adios"}></Header>
-        <Header/>
+        {sesion === true ? 
+          // <> es fragmento, como un div integrado que te permite poner varias cosas
+          <>
+                    <Login/>
+
+            <Header title={"Bienvenido"} color={"red"}/>
+            <Alumnos amigos={amigos}/>
+            <button onClick={()=>setSesion(false)}> Cerrar sesion</button>
+          </>
+          :
+          <>
+            <p>No has iniciado sesion....</p>
+            <button onClick={()=>setSesion(true)}>Iniciar sesion</button>
+          </>
+        }
       </header>
-      {sesion == true ? 
-        // <> es fragmento, como un div integrado que te permite poner varias cosas
-        <>
-        <Header title={"Bienvenido"} color={"red"}/>
-        <ul>
-          {amigos.map((amigo, index)=>{
-            return <li key={index}>{amigo}</li>
-          })}
-        </ul>
-        </>
-        :
-        <p>No has iniciado sesion....</p>
-      }
     </div>
   );
 }
